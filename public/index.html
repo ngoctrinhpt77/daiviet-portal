@@ -33,13 +33,13 @@
       background: var(--white);
       border-bottom: 1px solid var(--border);
       padding: 0 24px;
-      height: 60px;
       display: flex;
       align-items: center;
       gap: 12px;
       position: sticky;
       top: 0;
       z-index: 10;
+      height: 60px;
     }
     .logo {
       width: 36px; height: 36px;
@@ -49,150 +49,105 @@
       flex-shrink: 0;
     }
     .logo svg { width: 18px; height: 18px; color: white; }
-    header h1 { font-size: 16px; font-weight: 700; color: var(--text); }
-    header .sub { font-size: 12px; color: var(--text-muted); margin-top: 1px; }
+    .header-text h1 { font-size: 16px; font-weight: 700; }
+    .header-text .sub { font-size: 12px; color: var(--text-muted); }
+
+    /* ── TABS ── */
+    .tabs {
+      display: flex;
+      border-bottom: 1px solid var(--border);
+      background: var(--white);
+      padding: 0 24px;
+      gap: 4px;
+    }
+    .tab-btn {
+      padding: 12px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      border: none;
+      background: none;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color .15s;
+    }
+    .tab-btn svg { width: 15px; height: 15px; }
+    .tab-btn:hover { color: var(--text); }
+    .tab-btn.active { color: var(--primary-dark); border-bottom-color: var(--primary); }
 
     /* ── MAIN ── */
-    main {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 32px 20px;
-    }
+    main { max-width: 860px; margin: 0 auto; padding: 32px 20px; }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
 
-    .page-title {
-      font-size: 22px;
-      font-weight: 700;
-      margin-bottom: 4px;
-    }
-    .page-sub {
-      font-size: 13px;
-      color: var(--text-muted);
-      margin-bottom: 24px;
-    }
+    .page-title { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+    .page-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 24px; }
 
     /* ── SEARCH ── */
-    .search-wrap {
-      position: relative;
-      margin-bottom: 20px;
-    }
+    .search-wrap { position: relative; margin-bottom: 20px; }
     .search-wrap svg {
-      position: absolute;
-      left: 14px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 16px; height: 16px;
-      color: var(--text-muted);
-      pointer-events: none;
+      position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+      width: 16px; height: 16px; color: var(--text-muted); pointer-events: none;
     }
     #search {
-      width: 100%;
-      padding: 11px 40px 11px 40px;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      font-size: 14px;
-      background: var(--white);
-      outline: none;
+      width: 100%; padding: 11px 40px 11px 40px;
+      border: 1px solid var(--border); border-radius: 12px;
+      font-size: 14px; background: var(--white); outline: none;
       transition: border-color .15s, box-shadow .15s;
     }
     #search:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(245,158,11,.15); }
     #clear-btn {
-      position: absolute;
-      right: 12px;
-      top: 50%;
-      transform: translateY(-50%);
-      background: none;
-      border: none;
-      cursor: pointer;
-      color: var(--text-muted);
-      display: none;
-      padding: 4px;
+      position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+      background: none; border: none; cursor: pointer; color: var(--text-muted);
+      display: none; padding: 4px;
     }
     #clear-btn:hover { color: var(--text); }
     #clear-btn svg { width: 14px; height: 14px; }
 
     /* ── STATS ── */
     #stats { font-size: 12px; color: var(--text-muted); margin-bottom: 16px; }
-    #stats span {
-      background: #f3f4f6;
-      padding: 3px 10px;
-      border-radius: 99px;
-      margin-right: 6px;
-    }
+    #stats span { background: #f3f4f6; padding: 3px 10px; border-radius: 99px; margin-right: 6px; }
     #stats .match { background: #fef3c7; color: #92400e; }
 
-    /* ── CARDS GRID ── */
+    /* ── CARDS ── */
     #cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
-
     .card {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 20px;
-      cursor: pointer;
-      transition: box-shadow .2s, transform .15s;
-      box-shadow: var(--shadow);
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      position: relative;
-      overflow: hidden;
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 20px; cursor: pointer;
+      transition: box-shadow .2s, transform .15s; box-shadow: var(--shadow);
+      display: flex; flex-direction: column; gap: 12px;
+      position: relative; overflow: hidden;
     }
     .card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 3px;
-      background: var(--card-accent, var(--primary));
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 3px; background: var(--card-accent, var(--primary));
     }
     .card:hover { box-shadow: var(--shadow-hover); transform: translateY(-2px); }
-
     .card-head { display: flex; align-items: flex-start; gap: 12px; }
     .card-icon {
-      width: 42px; height: 42px;
-      border-radius: 12px;
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-      background: var(--icon-bg, #fef3c7);
+      width: 42px; height: 42px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
     }
     .card-icon svg { width: 20px; height: 20px; }
-    .card-meta { flex: 1; }
     .card-code { font-size: 11px; font-family: monospace; color: var(--text-muted); margin-bottom: 2px; }
     .card-title { font-size: 15px; font-weight: 700; line-height: 1.3; }
-
     .card-badge {
-      display: inline-block;
-      font-size: 11px;
-      font-weight: 600;
-      padding: 2px 8px;
-      border-radius: 99px;
-      border: 1px solid;
+      display: inline-block; font-size: 11px; font-weight: 600;
+      padding: 2px 8px; border-radius: 99px; border: 1px solid;
     }
-
     .card-desc { font-size: 13px; color: var(--text-muted); line-height: 1.6; flex: 1; }
-
     .card-tags { display: flex; flex-wrap: wrap; gap: 5px; }
-    .card-tag {
-      font-size: 11px;
-      background: #f3f4f6;
-      color: var(--text-muted);
-      padding: 2px 8px;
-      border-radius: 99px;
-    }
-
+    .card-tag { font-size: 11px; background: #f3f4f6; color: var(--text-muted); padding: 2px 8px; border-radius: 99px; }
     .card-footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding-top: 8px;
-      border-top: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding-top: 8px; border-top: 1px solid var(--border);
     }
     .card-rev { font-size: 11px; color: var(--text-muted); }
-    .card-open {
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--primary-dark);
-      display: flex; align-items: center; gap: 4px;
-    }
+    .card-open { font-size: 12px; font-weight: 600; color: var(--primary-dark); display: flex; align-items: center; gap: 4px; }
     .card-open svg { width: 13px; height: 13px; }
 
     /* ── EMPTY ── */
@@ -201,60 +156,130 @@
 
     /* ── MODAL ── */
     #modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      z-index: 100;
-      flex-direction: column;
-      background: rgba(17,24,39,.75);
-      backdrop-filter: blur(4px);
+      display: none; position: fixed; inset: 0; z-index: 100;
+      flex-direction: column; background: rgba(17,24,39,.75); backdrop-filter: blur(4px);
     }
     #modal.open { display: flex; }
-
     .modal-bar {
-      background: var(--white);
-      border-bottom: 1px solid var(--border);
-      padding: 10px 16px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      flex-shrink: 0;
+      background: var(--white); border-bottom: 1px solid var(--border);
+      padding: 10px 16px; display: flex; align-items: center; gap: 12px; flex-shrink: 0;
     }
     .modal-info { flex: 1; min-width: 0; }
     .modal-code { font-size: 11px; font-family: monospace; color: var(--text-muted); }
     .modal-title { font-size: 14px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-
     .modal-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
     .btn {
       display: inline-flex; align-items: center; gap: 5px;
-      padding: 7px 14px;
-      border-radius: 8px;
-      font-size: 12px;
-      font-weight: 600;
-      border: none;
-      cursor: pointer;
-      text-decoration: none;
-      transition: background .15s;
+      padding: 7px 14px; border-radius: 8px; font-size: 12px; font-weight: 600;
+      border: none; cursor: pointer; text-decoration: none; transition: background .15s;
     }
     .btn svg { width: 13px; height: 13px; }
     .btn-outline { background: #f3f4f6; color: var(--text); }
     .btn-outline:hover { background: #e5e7eb; }
     .btn-primary { background: var(--primary); color: white; }
     .btn-primary:hover { background: var(--primary-dark); }
-    .btn-icon {
-      width: 34px; height: 34px; padding: 0;
-      justify-content: center;
-      background: none;
-      color: var(--text-muted);
-    }
+    .btn-icon { width: 34px; height: 34px; padding: 0; justify-content: center; background: none; color: var(--text-muted); }
     .btn-icon:hover { background: #f3f4f6; color: var(--text); }
-
     #modal iframe { flex: 1; border: none; width: 100%; }
+
+    /* ── CHAT ── */
+    .chat-wrap {
+      max-width: 680px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      height: calc(100vh - 160px);
+    }
+    .chat-intro {
+      background: var(--primary-light);
+      border: 1px solid #fde68a;
+      border-radius: 14px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .chat-intro-icon {
+      width: 36px; height: 36px; background: var(--primary); border-radius: 10px;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .chat-intro-icon svg { width: 18px; height: 18px; color: white; }
+    .chat-intro p { font-size: 13px; color: #78350f; line-height: 1.6; }
+    .chat-intro strong { font-weight: 700; }
+
+    .suggested-qs {
+      display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px;
+    }
+    .sq-btn {
+      font-size: 12px; padding: 6px 12px; border-radius: 99px;
+      border: 1px solid var(--border); background: var(--white);
+      color: var(--text-muted); cursor: pointer; transition: all .15s;
+    }
+    .sq-btn:hover { border-color: var(--primary); color: var(--primary-dark); background: var(--primary-light); }
+
+    .messages {
+      flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 16px;
+      padding-bottom: 8px;
+    }
+    .msg { display: flex; gap: 10px; align-items: flex-start; }
+    .msg.user { flex-direction: row-reverse; }
+    .msg-avatar {
+      width: 32px; height: 32px; border-radius: 10px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 700;
+    }
+    .msg.bot .msg-avatar { background: var(--primary); color: white; }
+    .msg.user .msg-avatar { background: #e0e7ff; color: #4338ca; }
+    .msg-bubble {
+      max-width: 80%; padding: 12px 16px; border-radius: 14px;
+      font-size: 14px; line-height: 1.65;
+    }
+    .msg.bot .msg-bubble { background: var(--white); border: 1px solid var(--border); border-radius: 4px 14px 14px 14px; }
+    .msg.user .msg-bubble { background: var(--primary); color: white; border-radius: 14px 4px 14px 14px; }
+    .msg-bubble p { margin-bottom: 8px; }
+    .msg-bubble p:last-child { margin-bottom: 0; }
+    .msg-bubble ul, .msg-bubble ol { padding-left: 18px; margin: 6px 0; }
+    .msg-bubble li { margin-bottom: 4px; }
+
+    .typing { display: flex; gap: 5px; align-items: center; padding: 4px 0; }
+    .typing span {
+      width: 7px; height: 7px; background: var(--text-muted); border-radius: 50%;
+      animation: bounce 1.2s infinite;
+    }
+    .typing span:nth-child(2) { animation-delay: .2s; }
+    .typing span:nth-child(3) { animation-delay: .4s; }
+    @keyframes bounce { 0%,80%,100% { transform: scale(0.8); opacity: .5; } 40% { transform: scale(1.2); opacity: 1; } }
+
+    .chat-input-area {
+      border-top: 1px solid var(--border);
+      padding-top: 16px;
+      display: flex;
+      gap: 10px;
+      align-items: flex-end;
+    }
+    #chat-input {
+      flex: 1; padding: 12px 16px; border: 1px solid var(--border);
+      border-radius: 14px; font-size: 14px; resize: none; outline: none;
+      font-family: inherit; min-height: 46px; max-height: 120px; line-height: 1.5;
+      transition: border-color .15s, box-shadow .15s;
+    }
+    #chat-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(245,158,11,.15); }
+    #send-btn {
+      width: 46px; height: 46px; border-radius: 12px;
+      background: var(--primary); color: white;
+      border: none; cursor: pointer; display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; transition: background .15s;
+    }
+    #send-btn:hover { background: var(--primary-dark); }
+    #send-btn:disabled { background: #d1d5db; cursor: not-allowed; }
+    #send-btn svg { width: 18px; height: 18px; }
 
     /* ── RESPONSIVE ── */
     @media (max-width: 600px) {
       #cards { grid-template-columns: 1fr; }
       .btn span { display: none; }
+      .chat-wrap { height: calc(100vh - 180px); }
     }
   </style>
 </head>
@@ -267,36 +292,88 @@
       <polyline points="14 2 14 8 20 8"/>
       <line x1="16" y1="13" x2="8" y2="13"/>
       <line x1="16" y1="17" x2="8" y2="17"/>
-      <polyline points="10 9 9 9 8 9"/>
     </svg>
   </div>
-  <div>
+  <div class="header-text">
     <h1>Cổng Tài liệu Nội bộ</h1>
     <div class="sub">Công ty Đại Việt</div>
   </div>
 </header>
 
-<main>
-  <div class="page-title">Quy trình &amp; Quy chế</div>
-  <div class="page-sub">Tra cứu nhanh các tài liệu quản lý nội bộ</div>
-
-  <div class="search-wrap">
+<div class="tabs">
+  <button class="tab-btn active" data-tab="docs">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+      <polyline points="14 2 14 8 20 8"/>
     </svg>
-    <input id="search" type="text" placeholder="Tìm kiếm tài liệu, mã số, từ khóa..." autocomplete="off" />
-    <button id="clear-btn" title="Xóa">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-    </button>
+    Tài liệu
+  </button>
+  <button class="tab-btn" data-tab="chat">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+    </svg>
+    Hỏi đáp AI
+  </button>
+</div>
+
+<main>
+  <!-- TAB: TÀI LIỆU -->
+  <div class="tab-panel active" id="tab-docs">
+    <div class="page-title">Quy trình &amp; Quy chế</div>
+    <div class="page-sub">Tra cứu nhanh các tài liệu quản lý nội bộ</div>
+
+    <div class="search-wrap">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input id="search" type="text" placeholder="Tìm kiếm tài liệu, mã số, từ khóa..." autocomplete="off" />
+      <button id="clear-btn" title="Xóa">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+
+    <div id="stats"></div>
+    <div id="cards"></div>
+    <div id="empty">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <p>Không tìm thấy tài liệu phù hợp</p>
+    </div>
   </div>
 
-  <div id="stats"></div>
-  <div id="cards"></div>
-  <div id="empty">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
-      <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-    </svg>
-    <p>Không tìm thấy tài liệu phù hợp</p>
+  <!-- TAB: HỎI ĐÁP -->
+  <div class="tab-panel" id="tab-chat">
+    <div class="chat-wrap">
+      <div class="chat-intro">
+        <div class="chat-intro-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+        </div>
+        <p><strong>Trợ lý AI nội bộ Đại Việt</strong><br/>
+        Tôi có thể trả lời câu hỏi dựa trên <strong>Quy trình Tuyển dụng</strong>, <strong>Quy chế Đào tạo</strong> và <strong>Quy trình Đánh giá Nội bộ</strong>. Hãy hỏi bất cứ điều gì bạn thắc mắc!</p>
+      </div>
+
+      <div class="suggested-qs" id="suggested">
+        <button class="sq-btn">Quy trình tuyển dụng gồm mấy bước?</button>
+        <button class="sq-btn">Nhân viên mới được đào tạo gì?</button>
+        <button class="sq-btn">Đánh giá nội bộ được thực hiện bao lâu một lần?</button>
+        <button class="sq-btn">Ai phụ trách tuyển dụng?</button>
+        <button class="sq-btn">Chính sách đào tạo bên ngoài là gì?</button>
+      </div>
+
+      <div class="messages" id="messages"></div>
+
+      <div class="chat-input-area">
+        <textarea id="chat-input" placeholder="Nhập câu hỏi của bạn..." rows="1"></textarea>
+        <button id="send-btn" title="Gửi">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+          </svg>
+        </button>
+      </div>
+    </div>
   </div>
 </main>
 
@@ -326,54 +403,41 @@
 </div>
 
 <script>
+  /* ── DOCUMENTS DATA ── */
   const DOCS = [
     {
-      code: 'PNS-QT-01',
-      title: 'Quy trình Tuyển dụng',
-      revision: 'Rev.03',
-      category: 'Nhân sự',
-      desc: 'Quy trình tuyển dụng nhân sự từ xác định nhu cầu, đăng tuyển, phỏng vấn đến ký hợp đồng lao động.',
+      code: 'PNS-QT-01', title: 'Quy trình Tuyển dụng', revision: 'Rev.03',
+      category: 'Nhân sự', desc: 'Quy trình tuyển dụng nhân sự từ xác định nhu cầu, đăng tuyển, phỏng vấn đến ký hợp đồng lao động.',
       tags: ['Tuyển dụng', 'Hợp đồng', 'Phỏng vấn', 'Nhân sự'],
       file: 'docs/PNS-QT-01.pdf',
-      accent: '#3b82f6',
-      iconBg: '#eff6ff',
+      accent: '#3b82f6', iconBg: '#eff6ff',
       badgeBg: '#eff6ff', badgeText: '#1d4ed8', badgeBorder: '#bfdbfe',
       icon: `<svg viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
     },
     {
-      code: 'PNS-QC-06',
-      title: 'Quy chế Đào tạo',
-      revision: 'Rev.00',
-      category: 'Đào tạo',
-      desc: 'Quy chế về đào tạo nội bộ và bên ngoài, kế hoạch đào tạo, đánh giá hiệu quả sau đào tạo.',
+      code: 'PNS-QC-06', title: 'Quy chế Đào tạo', revision: 'Rev.00',
+      category: 'Đào tạo', desc: 'Quy chế về đào tạo nội bộ và bên ngoài, kế hoạch đào tạo, đánh giá hiệu quả sau đào tạo.',
       tags: ['Đào tạo', 'Nội bộ', 'Phát triển', 'Kế hoạch'],
       file: 'docs/PNS-QC-06.pdf',
-      accent: '#10b981',
-      iconBg: '#ecfdf5',
+      accent: '#10b981', iconBg: '#ecfdf5',
       badgeBg: '#ecfdf5', badgeText: '#065f46', badgeBorder: '#a7f3d0',
       icon: `<svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>`,
     },
     {
-      code: 'PNS-QT-12',
-      title: 'Quy trình Đánh giá Nội bộ',
-      revision: 'Rev.01',
-      category: 'Kiểm soát',
-      desc: 'Quy trình kiểm tra và đánh giá nội bộ hệ thống quản lý chất lượng, lập kế hoạch và báo cáo kết quả.',
+      code: 'PNS-QT-12', title: 'Quy trình Đánh giá Nội bộ', revision: 'Rev.01',
+      category: 'Kiểm soát', desc: 'Quy trình kiểm tra và đánh giá nội bộ hệ thống quản lý chất lượng, lập kế hoạch và báo cáo kết quả.',
       tags: ['Đánh giá', 'Kiểm soát', 'Chất lượng', 'Báo cáo'],
       file: 'docs/PNS-QT-12.pdf',
-      accent: '#8b5cf6',
-      iconBg: '#f5f3ff',
+      accent: '#8b5cf6', iconBg: '#f5f3ff',
       badgeBg: '#f5f3ff', badgeText: '#5b21b6', badgeBorder: '#ddd6fe',
       icon: `<svg viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>`,
     },
   ];
 
+  /* ── BUILD CARDS ── */
   const cardsEl = document.getElementById('cards');
   const emptyEl = document.getElementById('empty');
   const statsEl = document.getElementById('stats');
-  const searchEl = document.getElementById('search');
-  const clearBtn = document.getElementById('clear-btn');
-  const modal    = document.getElementById('modal');
 
   function buildCard(doc) {
     const card = document.createElement('div');
@@ -383,7 +447,7 @@
     card.innerHTML = `
       <div class="card-head">
         <div class="card-icon" style="background:${doc.iconBg}">${doc.icon}</div>
-        <div class="card-meta">
+        <div>
           <div class="card-code">${doc.code}</div>
           <div class="card-title">${doc.title}</div>
         </div>
@@ -393,12 +457,8 @@
       <div class="card-tags">${doc.tags.map(t => `<span class="card-tag">${t}</span>`).join('')}</div>
       <div class="card-footer">
         <span class="card-rev">${doc.revision}</span>
-        <span class="card-open">
-          Xem tài liệu
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-        </span>
-      </div>
-    `;
+        <span class="card-open">Xem tài liệu <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+      </div>`;
     card.addEventListener('click', () => openModal(doc));
     return card;
   }
@@ -411,6 +471,9 @@
     if (shown < total) statsEl.innerHTML += `<span class="match">${shown} kết quả</span>`;
   }
 
+  /* ── SEARCH ── */
+  const searchEl = document.getElementById('search');
+  const clearBtn = document.getElementById('clear-btn');
   searchEl.addEventListener('input', () => {
     const q = searchEl.value.trim().toLowerCase();
     clearBtn.style.display = q ? 'flex' : 'none';
@@ -423,15 +486,15 @@
     emptyEl.style.display = shown === 0 ? 'block' : 'none';
     updateStats(DOCS.length, shown);
   });
-
   clearBtn.addEventListener('click', () => {
-    searchEl.value = '';
-    clearBtn.style.display = 'none';
+    searchEl.value = ''; clearBtn.style.display = 'none';
     document.querySelectorAll('.card').forEach(c => c.style.display = '');
     emptyEl.style.display = 'none';
     updateStats(DOCS.length, DOCS.length);
   });
 
+  /* ── MODAL ── */
+  const modal = document.getElementById('modal');
   function openModal(doc) {
     document.getElementById('modal-icon').innerHTML = doc.icon;
     document.getElementById('modal-icon').style.background = doc.iconBg;
@@ -440,19 +503,114 @@
     document.getElementById('btn-download').href = doc.file;
     document.getElementById('btn-newtab').href = doc.file;
     document.getElementById('modal-frame').src = doc.file;
-    modal.classList.add('open');
-    document.body.style.overflow = 'hidden';
+    modal.classList.add('open'); document.body.style.overflow = 'hidden';
   }
-
   function closeModal() {
     modal.classList.remove('open');
     document.getElementById('modal-frame').src = '';
     document.body.style.overflow = '';
   }
-
   document.getElementById('btn-close').addEventListener('click', closeModal);
   modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+  /* ── TABS ── */
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  /* ── CHAT ── */
+  const messagesEl = document.getElementById('messages');
+  const inputEl    = document.getElementById('chat-input');
+  const sendBtn    = document.getElementById('send-btn');
+
+  // Auto-resize textarea
+  inputEl.addEventListener('input', () => {
+    inputEl.style.height = 'auto';
+    inputEl.style.height = Math.min(inputEl.scrollHeight, 120) + 'px';
+  });
+
+  // Suggested questions
+  document.querySelectorAll('.sq-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      inputEl.value = btn.textContent;
+      document.getElementById('suggested').style.display = 'none';
+      sendMessage();
+    });
+  });
+
+  inputEl.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+  });
+  sendBtn.addEventListener('click', sendMessage);
+
+  function addMessage(role, text) {
+    const div = document.createElement('div');
+    div.className = `msg ${role}`;
+    const avatar = role === 'bot'
+      ? `<div class="msg-avatar">AI</div>`
+      : `<div class="msg-avatar">Bạn</div>`;
+    const bubble = `<div class="msg-bubble">${formatText(text)}</div>`;
+    div.innerHTML = avatar + bubble;
+    messagesEl.appendChild(div);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+    return div;
+  }
+
+  function addTyping() {
+    const div = document.createElement('div');
+    div.className = 'msg bot';
+    div.id = 'typing-indicator';
+    div.innerHTML = `<div class="msg-avatar">AI</div><div class="msg-bubble"><div class="typing"><span></span><span></span><span></span></div></div>`;
+    messagesEl.appendChild(div);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+  }
+
+  function formatText(text) {
+    return text
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\*(.*?)\*/g, '<em>$1</em>')
+      .replace(/^- (.+)$/gm, '<li>$1</li>')
+      .replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>')
+      .replace(/\n\n/g, '</p><p>')
+      .replace(/^(?!<[uo]l|<p|<li)(.+)/gm, '<p>$1</p>')
+      .replace(/<p><\/p>/g, '');
+  }
+
+  async function sendMessage() {
+    const q = inputEl.value.trim();
+    if (!q || sendBtn.disabled) return;
+
+    document.getElementById('suggested').style.display = 'none';
+    inputEl.value = '';
+    inputEl.style.height = 'auto';
+    sendBtn.disabled = true;
+
+    addMessage('user', q);
+    addTyping();
+
+    try {
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ question: q }),
+      });
+      const data = await res.json();
+      document.getElementById('typing-indicator')?.remove();
+      addMessage('bot', data.answer || data.error || 'Có lỗi xảy ra.');
+    } catch {
+      document.getElementById('typing-indicator')?.remove();
+      addMessage('bot', 'Không thể kết nối. Vui lòng thử lại.');
+    } finally {
+      sendBtn.disabled = false;
+      inputEl.focus();
+    }
+  }
 </script>
 </body>
 </html>

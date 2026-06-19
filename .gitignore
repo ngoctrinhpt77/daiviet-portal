@@ -1,1 +1,5 @@
 .vercel
+node_modules/
+docs-content.txt
+extract-pdf.js
+extract-pdf.mjs
