@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cổng Tài liệu Nội bộ — Đại Việt</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary: #f59e0b;
+      --primary-dark: #d97706;
+      --primary-light: #fef3c7;
+      --text: #1f2937;
+      --text-muted: #6b7280;
+      --border: #e5e7eb;
+      --bg: #f9fafb;
+      --white: #ffffff;
+      --radius: 16px;
+      --shadow: 0 1px 3px rgba(0,0,0,.08), 0 4px 16px rgba(0,0,0,.05);
+      --shadow-hover: 0 4px 12px rgba(0,0,0,.12), 0 8px 32px rgba(0,0,0,.08);
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .logo {
+      width: 36px; height: 36px;
+      background: var(--primary);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .logo svg { width: 18px; height: 18px; color: white; }
+    header h1 { font-size: 16px; font-weight: 700; color: var(--text); }
+    header .sub { font-size: 12px; color: var(--text-muted); margin-top: 1px; }
+
+    /* ── MAIN ── */
+    main {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 32px 20px;
+    }
+
+    .page-title {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .page-sub {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    /* ── SEARCH ── */
+    .search-wrap {
+      position: relative;
+      margin-bottom: 20px;
+    }
+    .search-wrap svg {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 16px; height: 16px;
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+    #search {
+      width: 100%;
+      padding: 11px 40px 11px 40px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      font-size: 14px;
+      background: var(--white);
+      outline: none;
+      transition: border-color .15s, box-shadow .15s;
+    }
+    #search:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(245,158,11,.15); }
+    #clear-btn {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--text-muted);
+      display: none;
+      padding: 4px;
+    }
+    #clear-btn:hover { color: var(--text); }
+    #clear-btn svg { width: 14px; height: 14px; }
+
+    /* ── STATS ── */
+    #stats { font-size: 12px; color: var(--text-muted); margin-bottom: 16px; }
+    #stats span {
+      background: #f3f4f6;
+      padding: 3px 10px;
+      border-radius: 99px;
+      margin-right: 6px;
+    }
+    #stats .match { background: #fef3c7; color: #92400e; }
+
+    /* ── CARDS GRID ── */
+    #cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+
+    .card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      cursor: pointer;
+      transition: box-shadow .2s, transform .15s;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      position: relative;
+      overflow: hidden;
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--card-accent, var(--primary));
+    }
+    .card:hover { box-shadow: var(--shadow-hover); transform: translateY(-2px); }
+
+    .card-head { display: flex; align-items: flex-start; gap: 12px; }
+    .card-icon {
+      width: 42px; height: 42px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      background: var(--icon-bg, #fef3c7);
+    }
+    .card-icon svg { width: 20px; height: 20px; }
+    .card-meta { flex: 1; }
+    .card-code { font-size: 11px; font-family: monospace; color: var(--text-muted); margin-bottom: 2px; }
+    .card-title { font-size: 15px; font-weight: 700; line-height: 1.3; }
+
+    .card-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 99px;
+      border: 1px solid;
+    }
+
+    .card-desc { font-size: 13px; color: var(--text-muted); line-height: 1.6; flex: 1; }
+
+    .card-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+    .card-tag {
+      font-size: 11px;
+      background: #f3f4f6;
+      color: var(--text-muted);
+      padding: 2px 8px;
+      border-radius: 99px;
+    }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 8px;
+      border-top: 1px solid var(--border);
+    }
+    .card-rev { font-size: 11px; color: var(--text-muted); }
+    .card-open {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--primary-dark);
+      display: flex; align-items: center; gap: 4px;
+    }
+    .card-open svg { width: 13px; height: 13px; }
+
+    /* ── EMPTY ── */
+    #empty { display: none; text-align: center; padding: 60px 20px; color: var(--text-muted); }
+    #empty svg { width: 48px; height: 48px; margin: 0 auto 12px; opacity: .25; display: block; }
+
+    /* ── MODAL ── */
+    #modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      flex-direction: column;
+      background: rgba(17,24,39,.75);
+      backdrop-filter: blur(4px);
+    }
+    #modal.open { display: flex; }
+
+    .modal-bar {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+    .modal-info { flex: 1; min-width: 0; }
+    .modal-code { font-size: 11px; font-family: monospace; color: var(--text-muted); }
+    .modal-title { font-size: 14px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+    .modal-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 7px 14px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background .15s;
+    }
+    .btn svg { width: 13px; height: 13px; }
+    .btn-outline { background: #f3f4f6; color: var(--text); }
+    .btn-outline:hover { background: #e5e7eb; }
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-primary:hover { background: var(--primary-dark); }
+    .btn-icon {
+      width: 34px; height: 34px; padding: 0;
+      justify-content: center;
+      background: none;
+      color: var(--text-muted);
+    }
+    .btn-icon:hover { background: #f3f4f6; color: var(--text); }
+
+    #modal iframe { flex: 1; border: none; width: 100%; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      #cards { grid-template-columns: 1fr; }
+      .btn span { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+      <polyline points="14 2 14 8 20 8"/>
+      <line x1="16" y1="13" x2="8" y2="13"/>
+      <line x1="16" y1="17" x2="8" y2="17"/>
+      <polyline points="10 9 9 9 8 9"/>
+    </svg>
+  </div>
+  <div>
+    <h1>Cổng Tài liệu Nội bộ</h1>
+    <div class="sub">Công ty Đại Việt</div>
+  </div>
+</header>
+
+<main>
+  <div class="page-title">Quy trình &amp; Quy chế</div>
+  <div class="page-sub">Tra cứu nhanh các tài liệu quản lý nội bộ</div>
+
+  <div class="search-wrap">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+    </svg>
+    <input id="search" type="text" placeholder="Tìm kiếm tài liệu, mã số, từ khóa..." autocomplete="off" />
+    <button id="clear-btn" title="Xóa">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+
+  <div id="stats"></div>
+  <div id="cards"></div>
+  <div id="empty">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+      <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+    </svg>
+    <p>Không tìm thấy tài liệu phù hợp</p>
+  </div>
+</main>
+
+<!-- PDF Viewer Modal -->
+<div id="modal">
+  <div class="modal-bar">
+    <div id="modal-icon" class="card-icon" style="width:36px;height:36px;border-radius:10px;"></div>
+    <div class="modal-info">
+      <div id="modal-code" class="modal-code"></div>
+      <div id="modal-title" class="modal-title"></div>
+    </div>
+    <div class="modal-actions">
+      <a id="btn-download" href="#" download class="btn btn-outline">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        <span>Tải về</span>
+      </a>
+      <a id="btn-newtab" href="#" target="_blank" rel="noopener" class="btn btn-primary">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        <span>Mở tab mới</span>
+      </a>
+      <button id="btn-close" class="btn btn-icon" title="Đóng">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+  </div>
+  <iframe id="modal-frame" title="PDF Viewer"></iframe>
+</div>
+
+<script>
+  const DOCS = [
+    {
+      code: 'PNS-QT-01',
+      title: 'Quy trình Tuyển dụng',
+      revision: 'Rev.03',
+      category: 'Nhân sự',
+      desc: 'Quy trình tuyển dụng nhân sự từ xác định nhu cầu, đăng tuyển, phỏng vấn đến ký hợp đồng lao động.',
+      tags: ['Tuyển dụng', 'Hợp đồng', 'Phỏng vấn', 'Nhân sự'],
+      file: 'docs/PNS-QT-01.pdf',
+      accent: '#3b82f6',
+      iconBg: '#eff6ff',
+      badgeBg: '#eff6ff', badgeText: '#1d4ed8', badgeBorder: '#bfdbfe',
+      icon: `<svg viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
+    },
+    {
+      code: 'PNS-QC-06',
+      title: 'Quy chế Đào tạo',
+      revision: 'Rev.00',
+      category: 'Đào tạo',
+      desc: 'Quy chế về đào tạo nội bộ và bên ngoài, kế hoạch đào tạo, đánh giá hiệu quả sau đào tạo.',
+      tags: ['Đào tạo', 'Nội bộ', 'Phát triển', 'Kế hoạch'],
+      file: 'docs/PNS-QC-06.pdf',
+      accent: '#10b981',
+      iconBg: '#ecfdf5',
+      badgeBg: '#ecfdf5', badgeText: '#065f46', badgeBorder: '#a7f3d0',
+      icon: `<svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>`,
+    },
+    {
+      code: 'PNS-QT-12',
+      title: 'Quy trình Đánh giá Nội bộ',
+      revision: 'Rev.01',
+      category: 'Kiểm soát',
+      desc: 'Quy trình kiểm tra và đánh giá nội bộ hệ thống quản lý chất lượng, lập kế hoạch và báo cáo kết quả.',
+      tags: ['Đánh giá', 'Kiểm soát', 'Chất lượng', 'Báo cáo'],
+      file: 'docs/PNS-QT-12.pdf',
+      accent: '#8b5cf6',
+      iconBg: '#f5f3ff',
+      badgeBg: '#f5f3ff', badgeText: '#5b21b6', badgeBorder: '#ddd6fe',
+      icon: `<svg viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>`,
+    },
+  ];
+
+  const cardsEl = document.getElementById('cards');
+  const emptyEl = document.getElementById('empty');
+  const statsEl = document.getElementById('stats');
+  const searchEl = document.getElementById('search');
+  const clearBtn = document.getElementById('clear-btn');
+  const modal    = document.getElementById('modal');
+
+  function buildCard(doc) {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.style.setProperty('--card-accent', doc.accent);
+    card.dataset.search = [doc.code, doc.title, doc.category, doc.revision, ...doc.tags].join(' ').toLowerCase();
+    card.innerHTML = `
+      <div class="card-head">
+        <div class="card-icon" style="background:${doc.iconBg}">${doc.icon}</div>
+        <div class="card-meta">
+          <div class="card-code">${doc.code}</div>
+          <div class="card-title">${doc.title}</div>
+        </div>
+      </div>
+      <span class="card-badge" style="background:${doc.badgeBg};color:${doc.badgeText};border-color:${doc.badgeBorder}">${doc.category}</span>
+      <div class="card-desc">${doc.desc}</div>
+      <div class="card-tags">${doc.tags.map(t => `<span class="card-tag">${t}</span>`).join('')}</div>
+      <div class="card-footer">
+        <span class="card-rev">${doc.revision}</span>
+        <span class="card-open">
+          Xem tài liệu
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </span>
+      </div>
+    `;
+    card.addEventListener('click', () => openModal(doc));
+    return card;
+  }
+
+  DOCS.forEach(doc => cardsEl.appendChild(buildCard(doc)));
+  updateStats(DOCS.length, DOCS.length);
+
+  function updateStats(total, shown) {
+    statsEl.innerHTML = `<span>${total} tài liệu</span>`;
+    if (shown < total) statsEl.innerHTML += `<span class="match">${shown} kết quả</span>`;
+  }
+
+  searchEl.addEventListener('input', () => {
+    const q = searchEl.value.trim().toLowerCase();
+    clearBtn.style.display = q ? 'flex' : 'none';
+    let shown = 0;
+    document.querySelectorAll('.card').forEach(card => {
+      const match = !q || card.dataset.search.includes(q);
+      card.style.display = match ? '' : 'none';
+      if (match) shown++;
+    });
+    emptyEl.style.display = shown === 0 ? 'block' : 'none';
+    updateStats(DOCS.length, shown);
+  });
+
+  clearBtn.addEventListener('click', () => {
+    searchEl.value = '';
+    clearBtn.style.display = 'none';
+    document.querySelectorAll('.card').forEach(c => c.style.display = '');
+    emptyEl.style.display = 'none';
+    updateStats(DOCS.length, DOCS.length);
+  });
+
+  function openModal(doc) {
+    document.getElementById('modal-icon').innerHTML = doc.icon;
+    document.getElementById('modal-icon').style.background = doc.iconBg;
+    document.getElementById('modal-code').textContent = `${doc.code} · ${doc.category} · ${doc.revision}`;
+    document.getElementById('modal-title').textContent = doc.title;
+    document.getElementById('btn-download').href = doc.file;
+    document.getElementById('btn-newtab').href = doc.file;
+    document.getElementById('modal-frame').src = doc.file;
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    modal.classList.remove('open');
+    document.getElementById('modal-frame').src = '';
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('btn-close').addEventListener('click', closeModal);
+  modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+</script>
+</body>
+</html>
